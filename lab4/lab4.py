@@ -1,35 +1,16 @@
-# ============================================================
-# AI401 - Experiment 4
 # Reasoning Techniques
 # Modus Ponens and Modus Tollens
-# ============================================================
-
-
-# ============================================================
-# HELPER FUNCTIONS
-# ============================================================
 
 def negate(literal):
-    """
-    Return the opposite of a literal.
-
-    p  -> not p
-    not p -> p
-    """
     if literal.startswith("not "):
         return literal[4:]
     return "not " + literal
 
 
 def is_negative(literal):
-    """Check whether a literal is negative."""
     return literal.startswith("not ")
 
-
-# ============================================================
-# CORE ALGORITHM 1
 # MODUS PONENS
-# ============================================================
 
 def modus_ponens(facts, rules, justification):
     """
@@ -74,25 +55,10 @@ def modus_ponens(facts, rules, justification):
 
     return facts
 
-
-# ============================================================
-# CORE ALGORITHM 2
 # MODUS TOLLENS
-# ============================================================
 
 def modus_tollens(facts, rules, justification):
     """
-    Apply Modus Tollens.
-
-    For:
-
-        P -> Q
-        not Q
-
-    derive:
-
-        not P
-
     For multiple antecedents:
 
         P AND R -> Q
@@ -117,9 +83,6 @@ def modus_tollens(facts, rules, justification):
             if negate(consequent) not in facts:
                 continue
 
-            # ------------------------------------------------
-            # Single antecedent
-            # ------------------------------------------------
             if len(antecedents) == 1:
 
                 new_fact = negate(antecedents[0])
@@ -140,9 +103,7 @@ def modus_tollens(facts, rules, justification):
 
                     changed = True
 
-            # ------------------------------------------------
             # Multiple antecedents
-            # ------------------------------------------------
             else:
 
                 # Find antecedents already known to be true
@@ -197,10 +158,6 @@ def modus_tollens(facts, rules, justification):
     return facts
 
 
-# ============================================================
-# QUERY CHECKING
-# ============================================================
-
 def check_query(query, facts, rules):
     """
     Check whether a query is entailed.
@@ -231,10 +188,6 @@ def check_query(query, facts, rules):
     return False
 
 
-# ============================================================
-# PRINT JUSTIFICATIONS
-# ============================================================
-
 def print_justifications(facts, justification):
 
     print("\n--- JUSTIFICATION CHAINS ---")
@@ -257,10 +210,7 @@ def print_justifications(facts, justification):
             )
 
 
-# ============================================================
-# EXERCISE 2
-# CONTRADICTION DETECTION
-# ============================================================
+# EXERCISE 2 CONTRADICTION DETECTION
 
 def find_contradictions(facts):
 
@@ -326,9 +276,7 @@ def print_contradictions(facts, justification):
             print("  INPUT FACT")
 
 
-# ============================================================
 # FIND SMALLEST INPUT FACT REMOVAL
-# ============================================================
 
 def consistent_after_removing(input_facts, rules, removed):
 
@@ -381,35 +329,13 @@ def find_smallest_removal(input_facts, rules):
     return []
 
 
-# ============================================================
-# MAIN PROGRAM
-# ============================================================
-
-print("=" * 60)
 print("CORE ALGORITHM")
-print("=" * 60)
-
-
-# ------------------------------------------------------------
-# RULE BASE
-# ------------------------------------------------------------
 
 rules = [
-
-    # P -> Q
     ("R1", ["rain"], "wet"),
-
-    # wet -> slippery
     ("R2", ["wet"], "slippery"),
-
-    # slippery -> accident
     ("R3", ["slippery"], "accident")
 ]
-
-
-# ------------------------------------------------------------
-# INPUT FACTS
-# ------------------------------------------------------------
 
 facts = {
     "rain"
@@ -420,11 +346,6 @@ justification = {}
 
 print("\nInitial facts:")
 print(facts)
-
-
-# ------------------------------------------------------------
-# MODUS PONENS
-# ------------------------------------------------------------
 
 print("\n--- MODUS PONENS ---")
 
@@ -438,10 +359,6 @@ modus_ponens(
 print("\nFacts after Modus Ponens:")
 print(facts)
 
-
-# ------------------------------------------------------------
-# MODUS TOLLENS
-# ------------------------------------------------------------
 
 print("\n--- MODUS TOLLENS ---")
 
@@ -460,20 +377,10 @@ modus_tollens(
 print("\nFinal facts:")
 print(facts)
 
-
-# ------------------------------------------------------------
-# JUSTIFICATIONS
-# ------------------------------------------------------------
-
 print_justifications(
     facts,
     justification
 )
-
-
-# ============================================================
-# UNSOUND PATTERNS
-# ============================================================
 
 print("\n\n" + "=" * 60)
 print("UNSOUND INFERENCE PATTERNS")
@@ -499,9 +406,6 @@ print("""
 """)
 
 
-# Example: rain -> wet and wet is observed.
-# We CANNOT conclude rain.
-
 facts2 = {"wet"}
 
 check_query(
@@ -509,10 +413,6 @@ check_query(
     facts2,
     rules
 )
-
-
-# Example: rain -> wet and rain is false.
-# We CANNOT conclude not wet.
 
 facts3 = {"not rain"}
 
@@ -522,11 +422,6 @@ check_query(
     rules
 )
 
-
-# ============================================================
-# EXERCISE 1
-# THREE-ANTECEDENT RULE
-# ============================================================
 
 print("\n\n" + "=" * 60)
 print("EXERCISE 1")
