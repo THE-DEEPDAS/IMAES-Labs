@@ -1,7 +1,5 @@
 from itertools import product
 
-
-# ALGORITHM 1: SPECIFY THE NETWORK AND EVALUATE THE FULL JOINT
 def validate_network(network):
     for variable, data in network.items():
         expected_rows = 2 ** len(data["parents"])
@@ -14,13 +12,11 @@ def validate_network(network):
     full_joint_parameters = 2 ** len(network) - 1
     return parameters, full_joint_parameters
 
-
 def probability(variable, assignment, network):
     data = network[variable]
     parent_values = tuple(assignment[parent] for parent in data["parents"])
     p_true = data["cpt"][parent_values]
     return p_true if assignment[variable] else 1 - p_true
-
 
 def joint_probability(assignment, network):
     result = 1.0
