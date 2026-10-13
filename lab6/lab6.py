@@ -193,9 +193,7 @@ for n in range(3, 9):
     evaluated_sum = 0
 
     for k in range(instances):
-
         agents_r = []
-
         tasks_r = []
 
         for i in range(n):
